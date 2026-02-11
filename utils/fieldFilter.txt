@@ -1,0 +1,7 @@
+Alarm
+Status
+Alm
+Fault
+GlobSt
+Satus
+Teleindicacion
