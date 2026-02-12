@@ -62,6 +62,66 @@ router.get("/info/:puuid", async (req, res) => {
 	}
 });
 
+router.get("/match/:matchId", async (req, res) => {
+	const { matchId } = req.params;
+
+	try {
+
+		const url = `https://europe.api.riotgames.com/lol/match/v5/matches/${matchId}`;
+
+		const response = await fetch(url, {
+			method: "GET",
+			headers: {
+				"X-Riot-Token": API_KEY,
+				"Content-Type": "application/json",
+			},
+		});
+
+		const data = await response.json();
+
+		res.json({ data: data , error: "" });
+	} catch (error) {
+		if (error.response) {
+			res.json({ data: {} , error: error.response.data });
+			console.error("Status:", error.response.status);
+			console.error("Data:", error.response.data);
+		} else {
+			console.err("else error")
+			res.json({ data: {} , error: error.message });
+		}
+	}
+});
+
+router.get("/matches/:puuid", async (req, res) => {
+	const { puuid } = req.params;
+
+	try {
+
+		const url = `https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?queue=420&type=ranked&start=0&count=5`;
+
+		const response = await fetch(url, {
+			method: "GET",
+			headers: {
+				"X-Riot-Token": API_KEY,
+				"Content-Type": "application/json",
+			},
+		});
+
+		const data = await response.json();
+
+		res.json({ data: data , error: "" });
+	} catch (error) {
+		if (error.response) {
+			res.json({ data: {} , error: error.response.data });
+			console.error("Status:", error.response.status);
+			console.error("Data:", error.response.data);
+		} else {
+			console.err("else error")
+			res.json({ data: {} , error: error.message });
+		}
+	}
+});
+
 
 router.post("/insertFolder", async (req, res) => {
 	try {
